@@ -2,6 +2,7 @@
 -- MIT license, see LICENSE for more details.
 local M = {}
 local cterm_colors
+local require = require('lualine.utils.require')
 local utils = require 'lualine.utils.utils'
 local section_highlight_map = {x = 'c', y = 'b', z = 'a'}
 local active_theme = nil

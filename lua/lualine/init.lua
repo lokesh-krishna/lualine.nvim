@@ -1,5 +1,7 @@
 -- Copyright (c) 2020-2021 hoob3rt
 -- MIT license, see LICENSE for more details.
+
+local require = require('lualine.utils.require')
 local highlight = require('lualine.highlight')
 local loader = require('lualine.utils.loader')
 local utils_section = require('lualine.utils.section')
