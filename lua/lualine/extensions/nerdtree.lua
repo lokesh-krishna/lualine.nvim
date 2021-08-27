@@ -1,7 +1,7 @@
 -- Copyright (c) 2020-2021 hoob3rt
 -- MIT license, see LICENSE for more details.
 local function get_short_cwd() return vim.fn.fnamemodify(vim.fn.getcwd(), ':~') end
-local empty = {function() return ' ' end, left_padding=0, right_padding=0}
+local empty = {function() return ' ' end, padding=0}
 
 local M = {}
 

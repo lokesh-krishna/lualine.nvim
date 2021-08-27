@@ -6,7 +6,7 @@ local function fugitive_branch()
   local icon = '' -- e0a0
   return icon .. ' ' .. vim.fn.FugitiveHead()
 end
-local empty = {function() return ' ' end, left_padding=0, right_padding=0}
+local empty = {function() return ' ' end, padding=0}
 
 
 M.sections = {

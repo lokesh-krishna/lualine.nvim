@@ -60,8 +60,14 @@ local Component = {
 
   -- Adds spaces to left and right of a component
   apply_padding = function(self)
-    local l_padding = (self.options.left_padding or self.options.padding or 1)
-    local r_padding = (self.options.right_padding or self.options.padding or 1)
+    local padding = self.options.padding
+    local l_padding, r_padding
+    if padding == nil then padding = 1 end
+    if type(padding) == "number" then
+      l_padding, r_padding = padding, padding
+    elseif type(padding) =='table' then
+      l_padding, r_padding = padding.left, padding.right
+    end
     if l_padding then
       if self.status:find('%%#.*#') == 1 then
         -- When component has changed the highlight at begining

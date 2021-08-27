@@ -76,7 +76,7 @@ end
 ins_left {
   function() return '▊' end,
   color = {fg = colors.blue}, -- Sets highlighting of component
-  left_padding = 0 -- We don't need space before this
+  padding = {left=0, right=1} -- We don't need space before this
 }
 
 ins_left {
@@ -111,7 +111,7 @@ ins_left {
     return ''
   end,
   color = "LualineMode",
-  left_padding = 0
+  padding = {right=1}
 }
 
 ins_left {
@@ -212,7 +212,7 @@ ins_right {
 ins_right {
   function() return '▊' end,
   color = {fg = colors.blue},
-  right_padding = 0
+  padding = {left = 1}
 }
 
 -- Now don't forget to initialize lualine

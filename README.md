@@ -265,8 +265,8 @@ shown . On the other hand branch will be formatted with global formatter
 options = {
   icons_enabled = 1, -- displays icons in alongside component
   padding = 1, -- adds padding to the left and right of components
-  left_padding = 1, -- adds padding to the left of components
-  right_padding =1, -- adds padding to the right of components
+               -- padding can be specified to left or right separately like
+               -- padding = { left = left_padding, right = right_padding }
   format = nil -- format function, formats component's output
 }
 ```

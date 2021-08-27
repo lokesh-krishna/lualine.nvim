@@ -121,8 +121,11 @@ component type '%s' isn't recognised. Check if spelling is correct.]], component
   end
 end
 
-local function deprecatation_notice_upper_lower(kind)
-  notice.add_notice(string.format([[
+local function option_deprecatation_notice(component)
+  local types = {
+    case = function()
+      local kind = component.upper ~= nil and 'upper' or 'lower'
+      notice.add_notice(string.format([[
 ### option.%s
 
 Option `%s` has been deprecated.
@@ -140,6 +143,48 @@ You'll have to change it to this to retain old behavior:
   format = string.%s
 ```
 ]], kind, kind, kind, kind))
+    end,
+    padding = function()
+      local kind = component.left_padding ~= nil and 'left_padding' or 'right_padding'
+      notice.add_notice(string.format([[
+### option.%s
+
+Option `%s` has been deprecated.
+Please use `padding` option to set left/right padding.
+
+You have some thing like this in your config:
+
+```lua
+  %s = %d,
+```
+
+You'll have to change it to this to retain old behavior:
+
+```lua
+  padding = { %s = %d }
+```
+if you've set both left_padding and right_padding for a component
+you'll need to have something like
+```lua
+  padding = { left = x, right = y }
+```
+When you set `padding = x` it's same as `padding = {left = x, right = x}`
+]], kind, kind, kind, component[kind], kind == 'left_padding' and 'left' or 'right', component[kind]))
+    if component.left_padding and component.right_padding then
+      component.padding = {left = component.left_padding, right = component.right_padding}
+      component.left_padding = nil
+      component.right_padding = nil
+    elseif component.left_padding then
+      component.padding = {left = component.left_padding, right = 1}
+      component.left_padding = nil
+    else
+      component.padding = {left = 1, right = component.right_padding}
+      component.right_padding = nil
+    end
+  end
+}
+  if component.upper ~= nil or component.lower ~= nil then types.case() end
+  if component.left_padding ~= nil or component.right_padding ~= nil then types.padding() end
 end
 
 local function load_sections(sections, options)
@@ -152,8 +197,7 @@ local function load_sections(sections, options)
       component.self.section = section_name
       -- apply default args
       component = vim.tbl_extend('keep', component, options)
-      if component.upper ~= nil then deprecatation_notice_upper_lower('upper') end
-      if component.lower ~= nil then deprecatation_notice_upper_lower('lower') end
+      option_deprecatation_notice(component)
       section[index] = component_loader(component)
     end
   end

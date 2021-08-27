@@ -111,8 +111,7 @@ describe('Component:', function()
     it('left_padding', function()
       local opts = build_component_opts({
         component_separators = {'', ''},
-        padding = 0,
-        left_padding = 5
+        padding = {left=5}
       })
       assert_component(nil, opts, '     test')
     end)
@@ -120,8 +119,7 @@ describe('Component:', function()
     it('right_padding', function()
       local opts = build_component_opts({
         component_separators = {'', ''},
-        padding = 0,
-        right_padding = 5
+        padding = {right=5}
       })
       assert_component(nil, opts, 'test     ')
     end)
