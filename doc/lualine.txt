@@ -185,11 +185,15 @@ but you cannot use local options as global.
 Global option used locally overwrites the global, for example:
 >
     require'lualine'.setup {
-      options = {lower = true},
-      sections = {lualine_a = {{'mode', lower = false}}, lualine_b = {'branch'}}
+      options = {format = string.lower},
+      sections = {lualine_a = {
+        {'mode', format = function(str) return str:sub(1,1) end}},
+                  lualine_b = {'branch'}}
     }
 
-`mode` will be displayed with `lower = false` and `branch` will be displayed with `lower = true`
+`mode` will be formatted with the passed fa=unction so only first char will be
+shown . On the other hand branch will be formatted with global formatter
+`string.lower` so it will be showed in lower case.
 
 Available options:~
 
@@ -201,8 +205,6 @@ Global options~
     padding = 1, -- adds padding to the left and right of components
     left_padding = 1, -- adds padding to the left of components
     right_padding =1, -- adds padding to the right of components
-    upper = false, -- displays components in uppercase
-    lower = false, -- displays components in lowercase
     format = nil -- format function, formats component's output
   }
 

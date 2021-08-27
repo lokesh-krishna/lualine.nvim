@@ -121,6 +121,27 @@ component type '%s' isn't recognised. Check if spelling is correct.]], component
   end
 end
 
+local function deprecatation_notice_upper_lower(kind)
+  notice.add_notice(string.format([[
+### option.%s
+
+Option `%s` has been deprecated.
+Please use `format` option if you need to change case of a component.
+
+You have some thing like this in your config:
+
+```lua
+  %s = true,
+```
+
+You'll have to change it to this to retain old behavior:
+
+```lua
+  format = string.%s
+```
+]], kind, kind, kind, kind))
+end
+
 local function load_sections(sections, options)
   for section_name, section in pairs(sections) do
     for index, component in pairs(section) do
@@ -131,6 +152,8 @@ local function load_sections(sections, options)
       component.self.section = section_name
       -- apply default args
       component = vim.tbl_extend('keep', component, options)
+      if component.upper ~= nil then deprecatation_notice_upper_lower('upper') end
+      if component.lower ~= nil then deprecatation_notice_upper_lower('lower') end
       section[index] = component_loader(component)
     end
   end

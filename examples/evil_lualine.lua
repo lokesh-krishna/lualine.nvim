@@ -180,14 +180,14 @@ ins_left {
 -- Add components to right sections
 ins_right {
   'o:encoding', -- option component same as &encoding in viml
-  upper = true, -- I'm not sure why it's upper case either ;)
+  format = string.upper, -- I'm not sure why it's upper case either ;)
   condition = conditions.hide_in_width,
   color = {fg = colors.green, gui = 'bold'}
 }
 
 ins_right {
   'fileformat',
-  upper = true,
+  format = string.upper,
   icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
   color = {fg = colors.green, gui = 'bold'}
 }
