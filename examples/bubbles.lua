@@ -5,46 +5,107 @@ local lualine = require 'lualine'
 
 -- Config
 local config = {
-  options = {
-    icons_enabled = true,
-    component_separators = {'|', '|'},
-    -- custom moonfly theme located at https://github.com/lokesh-krishna/moonfly.nvim
-    theme = 'moonfly',
-    }
+	options = {
+        icons_enabled = true,
+		disabled_filetypes = {'NvimTree'},
+		theme = 'moonfly',
+		component_separators = {'|', '|'},
+		section_separators = {'', ''},
   },
-  sections = {
-    -- these are to remove the defaults
-    lualine_a = {
-    {
-        'mode',
-	separator = {'', ''},
-    }
-    },
-    lualine_b = {'filename', 'branch'},
-    lualine_c = {'fileformat'},
-    lualine_x = {},
-    lualine_y = {
-    'filetype',
-    {
-        'progress',
-        right_padding = 2,
-    }
-    },
-    lualine_z = {
-    {
-        'location',
-        separator = {'', ''},
-    }
-    },
-    },
-  inactive_sections = {
-    lualine_a = {'filename'},
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {'location'}
-  },
-  tabline = {},
-  extensions = {}
+	sections = {
+		lualine_a = {
+			{
+			'mode',
+			separator = {'', ''},
+			right_padding = 2,
+			left_padding = 1,
+			}
+		},
+            lualine_b = {
+			{
+			'filename',
+			right_padding = 2,
+			left_padding = 2,
+		},
+			{ 
+			'branch',
+			right_padding = 2,
+			left_padding = 2,
+			}
+		},
+		lualine_c = {'fileformat'},
+		lualine_x = {},
+		lualine_y = {
+			{
+			'filetype',
+			right_padding = 2,
+			left_padding = 2,
+			},
+			{
+			'progress',
+			right_padding = 2,
+			left_padding = 2,
+			} 
+		},
+    		lualine_z = {
+	    		{
+	    		'location',
+	    		separator = {'', ''},
+            		left_padding = 2,
+            		right_padding = 1,
+	    		}
+	    	},
+  	},
+  	inactive_sections = {
+    		lualine_a = {'filename'},
+    		lualine_b = {},
+    		lualine_c = {},
+    		lualine_x = {},
+    		lualine_y = {},
+    		lualine_z = {'location'}
+  	},
+  	tabline = {},
+  	extensions = {}
 }
+EOF
+
+" treesitter configuration
+lua << EOF
+require("nvim-treesitter.configs").setup {
+	ensure_installed = "maintained", 
+  	highlight = {
+		enable = true,
+	},
+    indent = {
+        enable = true
+        }
+}
+EOF
+
+" telescope configuration
+lua << EOF
+require("telescope").setup{
+	defaults = {
+		prompt_prefix = "❯ ",
+    		selection_caret = "❯ ",
+    		sorting_strategy = "ascending",
+    		layout_config = {
+      			horizontal = {
+        			mirror = false,
+				prompt_position = 'top',
+				preview_width = 100,
+		        },
+		    },
+	    },
+    }
+EOF
+
+" gitsigns configuration
+lua << EOF
+require("gitsigns").setup()
+EOF
+
+" nvim-web-devicons setup
+lua << EOF
+require("nvim-web-devicons").setup()
+EOF
